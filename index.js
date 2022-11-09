@@ -4,6 +4,8 @@ const sequelize = require("./db/database");
 const userTable = require("./db/models/user");
 const authTable = require("./db/models/auth");
 
+const PORT = process.env.PORT;
+
 const run = async () => {
   await sequelize
     .authenticate()
@@ -15,13 +17,10 @@ const run = async () => {
       throw err;
     });
 
-  await sequelize.sync({ force: true });
+  await sequelize.sync();
 
-  var server = app.listen(8081, () => {
-    var port = server.address().port;
-    var address = server.address().address;
-
-    console.log(`server running at http://${address}:${port}`);
+  var server = app.listen(PORT, () => {
+    console.log(`server running port is ${PORT}`);
   });
 };
 
